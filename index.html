@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GREEN-API Example</title>
+</head>
+<body>
+    <!-- Поля для ввода параметров -->
+    <input type="text" id="idInstance" placeholder="ID_INSTANCE">
+    <input type="text" id="apiTokenInstance" placeholder="API_TOKEN_INSTANCE">
+    
+    <!-- Кнопка для отправки сообщения -->
+    <button onclick="sendMessage()">Отправить сообщение</button>
+    
+    <!-- Поле для вывода ответа -->
+    <div id="response"></div>
+
+    <script>
+        async function sendMessage() {
+            const idInstance = document.getElementById("idInstance").value;
+            const apiTokenInstance = document.getElementById("apiTokenInstance").value;
+
+            // Вызов метода sendMessage
+            const response = await fetch(`https://api.green-api.com/rest/message/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiTokenInstance}`
+                },
+                body: JSON.stringify({
+                    chatId: '77777777777@c.us', // Номер WhatsApp
+                    text: 'Hello, world!' // Текст сообщения
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
